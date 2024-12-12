@@ -4,17 +4,13 @@
  */
 package org.kelasb23.restoranpbo.models;
 
-import java.time.*;
-
 /**
  *
  * @author jeanjacket
  */
-public class Transaksi {
+public class User {
     private int id;
-    private double nominal;
-    private LocalDate tanggal;
-    private int idJenisTransaksi;
-    private int idMetodePembayaran;
-    
+    private String nama;
+    private double gajiPokok;
+    private int idRole;
 }

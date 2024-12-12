@@ -9,5 +9,10 @@ package org.kelasb23.restoranpbo.models;
  * @author jeanjacket
  */
 public class Pesanan {
-    
+    private int id;
+    private String struk;
+    private boolean status;
+    private int idMeja;
+    private int idMutasiInventory;
+    private int idTransaksi;
 }

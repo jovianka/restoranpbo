@@ -8,6 +8,11 @@ package org.kelasb23.restoranpbo.models;
  *
  * @author jeanjacket
  */
+
+import java.util.Date;
+
 public class ItemMutasiInventory {
-    
+    private int idMutasiInventory;
+    private int idInventory;
+    private int mutasi;
 }

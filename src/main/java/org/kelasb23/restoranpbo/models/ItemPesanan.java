@@ -9,5 +9,9 @@ package org.kelasb23.restoranpbo.models;
  * @author jeanjacket
  */
 public class ItemPesanan {
-    
+    private int idPesanan;
+    private int idMenu;
+    private int jumlah;
+    private boolean status;
+    private double totalHargaItem;
 }

@@ -7,7 +7,7 @@
 # 
 # Host: 127.0.0.1 (MySQL Community Server - GPL 9.1.0)
 # Database: restoran_pbo
-# Generation time: 2024-12-12T09:21:17+08:00
+# Generation time: 2024-12-12T12:54:33+08:00
 # ************************************************************
 
 
@@ -29,10 +29,10 @@ CREATE TABLE `absensi_pegawai` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `tanggal` datetime NOT NULL,
   `hadir` tinyint(1) NOT NULL,
-  `id_pegawai` bigint NOT NULL,
+  `id_user` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_absensi_pegawai_pegawai` (`id_pegawai`),
-  CONSTRAINT `FK_absensi_pegawai_pegawai` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_absensi_pegawai_user` (`id_user`),
+  CONSTRAINT `FK_absensi_pegawai_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -88,7 +88,7 @@ CREATE TABLE `item_pesanan` (
   `id_menu` bigint NOT NULL,
   `jumlah` int NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `total_harga_item` tinyint NOT NULL,
+  `total_harga_item` double NOT NULL,
   PRIMARY KEY (`id_pesanan`,`id_menu`),
   KEY `FK_item_pesanan_menu` (`id_menu`),
   CONSTRAINT `FK_item_pesanan_menu` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -96,30 +96,6 @@ CREATE TABLE `item_pesanan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-
-
-
-# Dump of table jabatan_pegawai
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `jabatan_pegawai`;
-
-CREATE TABLE `jabatan_pegawai` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `jabatan_pegawai` WRITE;
-/*!40000 ALTER TABLE `jabatan_pegawai` DISABLE KEYS */;
-
-INSERT INTO `jabatan_pegawai` (`id`, `nama`) VALUES
-	(1, "pemilik"),
-	(2, "kasir"),
-	(3, "chef");
-
-/*!40000 ALTER TABLE `jabatan_pegawai` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 
@@ -243,25 +219,6 @@ CREATE TABLE `mutasi_inventory` (
 
 
 
-# Dump of table pegawai
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `pegawai`;
-
-CREATE TABLE `pegawai` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `gaji_pokok` double NOT NULL,
-  `id_jabatan` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_pegawai_jabatan_pegawai` (`id_jabatan`),
-  CONSTRAINT `FK_pegawai_jabatan_pegawai` FOREIGN KEY (`id_jabatan`) REFERENCES `jabatan_pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-
-
-
-
 # Dump of table penggajian
 # ------------------------------------------------------------
 
@@ -271,13 +228,13 @@ CREATE TABLE `penggajian` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `bonus` double NOT NULL,
   `potongan` double NOT NULL,
-  `id_pegawai` bigint NOT NULL,
+  `id_user` bigint NOT NULL,
   `id_transaksi` bigint NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_penggajian_pegawai` (`id_pegawai`),
   KEY `FK_penggajian_transaksi` (`id_transaksi`),
-  CONSTRAINT `FK_penggajian_pegawai` FOREIGN KEY (`id_pegawai`) REFERENCES `pegawai` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_penggajian_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_penggajian_user` (`id_user`),
+  CONSTRAINT `FK_penggajian_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_penggajian_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -347,6 +304,30 @@ CREATE TABLE `reservasi` (
 
 
 
+# Dump of table role
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+
+INSERT INTO `role` (`id`, `nama`) VALUES
+	(1, "pemilik"),
+	(2, "kasir"),
+	(3, "chef");
+
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+
 # Dump of table transaksi
 # ------------------------------------------------------------
 
@@ -369,6 +350,25 @@ CREATE TABLE `transaksi` (
 
 
 
+# Dump of table user
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `user`;
+
+CREATE TABLE `user` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `gaji_pokok` double NOT NULL,
+  `id_role` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FK_user_role` (`id_role`),
+  CONSTRAINT `FK_user_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+
+
+
 # Dump of views
 # ------------------------------------------------------------
 
@@ -382,4 +382,4 @@ CREATE TABLE `transaksi` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-# Dump completed on 2024-12-12T09:21:17+08:00
+# Dump completed on 2024-12-12T12:54:33+08:00

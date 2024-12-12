@@ -8,6 +8,7 @@ package org.kelasb23.restoranpbo.models;
  *
  * @author jeanjacket
  */
-public class Pegawai {
-    
+public class Role {
+    private int id;
+    private String nama;
 }

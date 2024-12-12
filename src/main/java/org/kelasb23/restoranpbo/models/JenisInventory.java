@@ -9,5 +9,6 @@ package org.kelasb23.restoranpbo.models;
  * @author jeanjacket
  */
 public class JenisInventory {
-    
+    private int id;
+    private String nama;
 }

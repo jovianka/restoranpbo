@@ -4,10 +4,13 @@
  */
 package org.kelasb23.restoranpbo.models;
 
+import java.time.*;
+
 /**
  *
  * @author jeanjacket
  */
 public class MutasiInventory {
-    
+    private int id;
+    private LocalDate tanggal;
 }

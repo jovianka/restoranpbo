@@ -9,5 +9,8 @@ package org.kelasb23.restoranpbo.models;
  * @author jeanjacket
  */
 public class Meja {
-    
+    private int id;
+    private int noMeja;
+    private boolean tersedia;
+    private int kapasitas;
 }

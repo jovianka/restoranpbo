@@ -8,6 +8,12 @@ package org.kelasb23.restoranpbo.models;
  *
  * @author jeanjacket
  */
+
+import java.time.*;
+
 public class AbsensiPegawai {
-    
+    private int id;
+    private LocalDate tanggal;
+    private boolean hadir;
+    private int idUser;
 }

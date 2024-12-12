@@ -9,5 +9,7 @@ package org.kelasb23.restoranpbo.models;
  * @author jeanjacket
  */
 public class Resep {
-    
+    private int idMenu;
+    private int idInventory;
+    private int jumlahBahan;
 }
