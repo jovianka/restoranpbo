@@ -44,8 +44,7 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#building-the-project">Building the project</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -56,52 +55,24 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![image](https://github.com/jovianka/tugas-akhir-alpro-1/assets/83814092/005eacbf-eefb-4669-a6f1-635c7bbea370)
+This project is created for to fulfill the requirements for passing my third semester course in Udayana University: Pemrograman Berorientasi Objek.
 
-
-This project is created for to fulfill the requirements for passing the first semester course: Algoritma dan Pemrograman, of computer science department at Udayana University.
-
-There are 5 main features of this Contact App:
-* Adding Contact
-* Showing Contact
-* Modifying Contact
-* Searching Contact
-* Deleting Contact
-
-Everything is written in pure C with ncurses and the app is built with CMake.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## Build from source
+## Building the project
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/jovianka/tugas-akhir-alpro-1.git
+   git clone https://github.com/jovianka/restoranpbo.git
    ```
-2. Go to the build directory
-   ```sh
-   cd tugas-akhir-alpro-1
-   ```
-3. Make the binary
-   ```sh
-   cmake -S ./src -B ./build && cd build && make
-   ```
+2. Open the project using Netbeans
 4. Run tugasakhir
    ```sh
    ./tugasakhir
    ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-To use the Contact App, simply follow the instruction written your terminal window.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- LICENSE -->
