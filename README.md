@@ -13,7 +13,7 @@
 <!-- PROJECT LOGO -->
 </br>
 <div align="center">
-  <a href="https://github.com/jovianka/tugas-akhir-alpro-1">
+  <a href="https://github.com/jovianka/restoranpbo">
     <img src="https://github.com/dash4k/tugas-akhir-alpro-1/assets/133938416/ff71757a-1b51-44b7-b14e-b53b061d9815" alt="Logo" width="230" height="259">
   </a>
 
@@ -66,11 +66,10 @@ This project is created for to fulfill the requirements for passing my third sem
    ```sh
    git clone https://github.com/jovianka/restoranpbo.git
    ```
-2. Open the project using Netbeans
-4. Run tugasakhir
-   ```sh
-   ./tugasakhir
-   ```
+2. Open the project on Netbeans IDE
+4. Right click on the project -> Clean and Build. This will generate a .jar in the /target file. You can run it with `java -jar /jarfile`
+5. You can also build the project with `mvn compile assembly:single`
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
