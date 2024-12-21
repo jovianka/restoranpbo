@@ -60,15 +60,26 @@ This project is created for to fulfill the requirements for passing my third sem
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-## Building the project
+## Building The Project
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/jovianka/restoranpbo.git
+   git clone https://github.com/jovianka/restoranpbo.git && cd restoranpbo
    ```
 2. Open the project on Netbeans IDE
-4. Right click on the project -> Clean and Build. This will generate a .jar in the /target file. You can run it with `java -jar /jarfile`
-5. You can also build the project with `mvn compile assembly:single`
+3. Copy .env.example, name it .env and set your variables on it, see [How to Use dotenv-java](https://www.twilio.com/en-us/blog/working-with-environment-variables-in-java)
+4. Compile the project
+   ```sh
+   mvn compile assembly:single
+   ```
+   or
+   ```sh
+   mvn clean compile assembly:single
+   ```
+6. Run the jar file
+   ```sh
+   java -jar ./target/restoranpbo-1.0-SNAPSHOT-jar-with-dependencies.jar
+   ```
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
