@@ -1,13 +1,13 @@
 # ************************************************************
 # Antares - SQL Client
-# Version 0.7.29
+# Version 0.7.30
 # 
 # https://antares-sql.app/
 # https://github.com/antares-sql/antares
 # 
 # Host: 127.0.0.1 (MySQL Community Server - GPL 9.1.0)
 # Database: restoran_pbo
-# Generation time: 2024-12-12T12:54:33+08:00
+# Generation time: 2024-12-21T14:02:54+08:00
 # ************************************************************
 
 
@@ -49,10 +49,8 @@ CREATE TABLE `inventory` (
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `stok` int NOT NULL,
   `satuan` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `id_jenis_inventory` bigint DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_inventory_jenis_inventory` (`id_jenis_inventory`),
-  CONSTRAINT `FK_inventory_jenis_inventory` FOREIGN KEY (`id_jenis_inventory`) REFERENCES `jenis_inventory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `jenis_inventory` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -99,53 +97,6 @@ CREATE TABLE `item_pesanan` (
 
 
 
-# Dump of table jenis_inventory
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `jenis_inventory`;
-
-CREATE TABLE `jenis_inventory` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `jenis_inventory` WRITE;
-/*!40000 ALTER TABLE `jenis_inventory` DISABLE KEYS */;
-
-INSERT INTO `jenis_inventory` (`id`, `nama`) VALUES
-	(2, "bahan_makanan"),
-	(3, "perabotan"),
-	(4, "peralatan_dapur");
-
-/*!40000 ALTER TABLE `jenis_inventory` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
-# Dump of table jenis_transaksi
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `jenis_transaksi`;
-
-CREATE TABLE `jenis_transaksi` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `jenis_transaksi` WRITE;
-/*!40000 ALTER TABLE `jenis_transaksi` DISABLE KEYS */;
-
-INSERT INTO `jenis_transaksi` (`id`, `nama`) VALUES
-	(1, "pemasukan"),
-	(2, "pengeluaran");
-
-/*!40000 ALTER TABLE `jenis_transaksi` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
 # Dump of table meja
 # ------------------------------------------------------------
 
@@ -157,9 +108,21 @@ CREATE TABLE `meja` (
   `tersedia` tinyint(1) NOT NULL,
   `kapasitas` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+LOCK TABLES `meja` WRITE;
+/*!40000 ALTER TABLE `meja` DISABLE KEYS */;
 
+INSERT INTO `meja` (`id`, `no_meja`, `tersedia`, `kapasitas`) VALUES
+	(6, 1, 1, 4),
+	(7, 2, 1, 4),
+	(8, 3, 1, 4),
+	(9, 4, 1, 4),
+	(10, 5, 1, 8),
+	(11, 1, 1, 16);
+
+/*!40000 ALTER TABLE `meja` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
@@ -177,30 +140,6 @@ CREATE TABLE `menu` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-
-
-
-# Dump of table metode_pembayaran
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `metode_pembayaran`;
-
-CREATE TABLE `metode_pembayaran` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `metode_pembayaran` WRITE;
-/*!40000 ALTER TABLE `metode_pembayaran` DISABLE KEYS */;
-
-INSERT INTO `metode_pembayaran` (`id`, `nama`) VALUES
-	(1, "cash"),
-	(2, "debit"),
-	(3, "kredit");
-
-/*!40000 ALTER TABLE `metode_pembayaran` ENABLE KEYS */;
-UNLOCK TABLES;
 
 
 
@@ -253,13 +192,16 @@ CREATE TABLE `pesanan` (
   `id_meja` bigint NOT NULL,
   `id_mutasi_inventory` bigint NOT NULL,
   `id_transaksi` bigint NOT NULL,
+  `id_user` bigint NOT NULL,
   PRIMARY KEY (`id`),
   KEY `FK_pesanan_meja` (`id_meja`),
   KEY `FK_pesanan_mutasi_inventory` (`id_mutasi_inventory`),
   KEY `FK_pesanan_transaksi` (`id_transaksi`),
+  KEY `FK_pesanan_user` (`id_user`),
   CONSTRAINT `FK_pesanan_meja` FOREIGN KEY (`id_meja`) REFERENCES `meja` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_pesanan_mutasi_inventory` FOREIGN KEY (`id_mutasi_inventory`) REFERENCES `mutasi_inventory` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_pesanan_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `FK_pesanan_transaksi` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_pesanan_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -292,6 +234,8 @@ DROP TABLE IF EXISTS `reservasi`;
 
 CREATE TABLE `reservasi` (
   `id` bigint NOT NULL AUTO_INCREMENT,
+  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `no_telp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `start_datetime` datetime NOT NULL,
   `end_datetime` datetime NOT NULL,
   `id_meja` bigint NOT NULL,
@@ -304,30 +248,6 @@ CREATE TABLE `reservasi` (
 
 
 
-# Dump of table role
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `role`;
-
-CREATE TABLE `role` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-
-INSERT INTO `role` (`id`, `nama`) VALUES
-	(1, "pemilik"),
-	(2, "kasir"),
-	(3, "chef");
-
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-
 # Dump of table transaksi
 # ------------------------------------------------------------
 
@@ -337,13 +257,9 @@ CREATE TABLE `transaksi` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nominal` double NOT NULL,
   `tanggal` datetime NOT NULL,
-  `id_jenis_transaksi` bigint NOT NULL,
-  `id_metode_pembayaran` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_transaksi_jenis_transaksi` (`id_jenis_transaksi`),
-  KEY `FK_transaksi_metode_pembayaran` (`id_metode_pembayaran`),
-  CONSTRAINT `FK_transaksi_jenis_transaksi` FOREIGN KEY (`id_jenis_transaksi`) REFERENCES `jenis_transaksi` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_transaksi_metode_pembayaran` FOREIGN KEY (`id_metode_pembayaran`) REFERENCES `metode_pembayaran` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `metode_pembayaran` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `jenis_transaksi` tinyint NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -359,10 +275,8 @@ CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `gaji_pokok` double NOT NULL,
-  `id_role` bigint NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK_user_role` (`id_role`),
-  CONSTRAINT `FK_user_role` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -382,4 +296,4 @@ CREATE TABLE `user` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-# Dump completed on 2024-12-12T12:54:33+08:00
+# Dump completed on 2024-12-21T14:02:54+08:00
