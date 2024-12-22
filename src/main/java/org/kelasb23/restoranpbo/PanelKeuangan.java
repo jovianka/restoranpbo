@@ -1108,8 +1108,8 @@ public class PanelKeuangan extends javax.swing.JPanel {
         );
         side_barLayout.setVerticalGroup(
             side_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_barLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(side_barLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(dashboard_button_side)
                 .addGap(18, 18, 18)
                 .addComponent(laporan_button_edit)
@@ -1117,7 +1117,7 @@ public class PanelKeuangan extends javax.swing.JPanel {
                 .addComponent(transaksi_button_edit)
                 .addGap(18, 18, 18)
                 .addComponent(payroll_button_edit)
-                .addGap(122, 122, 122))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Parent.setPreferredSize(new java.awt.Dimension(806, 503));
