@@ -37,6 +37,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
     private Dotenv dotenv;
     private File input_foto_pegawai;
     private boolean edit_pegawai_mode;
+    int edit_pegawai_row;
     private DefaultTableModel model_tabel_pegawai;
     private ArrayList<User> loaded_data_pegawai;
         
@@ -88,6 +89,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         edit_pegawai_mode = false;
         model_tabel_pegawai = new DefaultTableModel();
         loaded_data_pegawai = new ArrayList<>();
+        edit_pegawai_mode = false;
         
         data_restoran_tabel_pegawai.setModel(model_tabel_pegawai);
         this.model_tabel_pegawai.addColumn("Nama");
@@ -147,6 +149,25 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         data_restoran_selected_pegawai_foto = new javax.swing.JLabel();
         data_restoran_preview_foto = new javax.swing.JLabel();
         data_restoran_pegawai_update_label1 = new javax.swing.JLabel();
+        data_restoran_pegawai1 = new javax.swing.JPanel();
+        data_restoran_pegawai_update_label2 = new javax.swing.JLabel();
+        data_restoran_input_nama_pegawai_label1 = new javax.swing.JLabel();
+        data_restoran_input_nama_pegawai1 = new javax.swing.JTextField();
+        data_restoran_input_gaji_pegawai_label1 = new javax.swing.JLabel();
+        data_restoran_input_no_telp_pegawai_label1 = new javax.swing.JLabel();
+        data_restoran_input_no_telp_pegawai1 = new javax.swing.JTextField();
+        data_restoran_input_foto_pegawai1 = new javax.swing.JButton();
+        data_restoran_reset_foto_pegawai1 = new javax.swing.JButton();
+        data_restoran_tambah_pegawai_button1 = new javax.swing.JButton();
+        data_restoran_hapus_pegawai_button1 = new javax.swing.JButton();
+        data_restoran_ubah_pegawai_button1 = new javax.swing.JButton();
+        data_restoran_tabel_pegawai_label1 = new javax.swing.JLabel();
+        container_pegawai1 = new javax.swing.JScrollPane();
+        data_restoran_tabel_pegawai1 = new javax.swing.JTable();
+        data_restoran_input_gaji_pegawai1 = new javax.swing.JSpinner();
+        data_restoran_selected_pegawai_foto1 = new javax.swing.JLabel();
+        data_restoran_preview_foto1 = new javax.swing.JLabel();
+        data_restoran_pegawai_update_label3 = new javax.swing.JLabel();
         data_restoran_sidebar = new javax.swing.JPanel();
         data_restoran_nav_menu = new javax.swing.JButton();
         data_restoran_nav_pegawai = new javax.swing.JButton();
@@ -213,6 +234,11 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         });
 
         data_restoran_ubah_pegawai_button.setText("Ubah");
+        data_restoran_ubah_pegawai_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_ubah_pegawai_buttonActionPerformed(evt);
+            }
+        });
 
         data_restoran_tabel_pegawai_label.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         data_restoran_tabel_pegawai_label.setText("Daftar Pegawai");
@@ -261,10 +287,10 @@ public class PanelDataRestoran extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(data_restoran_hapus_pegawai_button))
                     .addGroup(data_restoran_pegawaiLayout.createSequentialGroup()
-                        .addGroup(data_restoran_pegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(data_restoran_pegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(data_restoran_tabel_pegawai_label)
                             .addComponent(container_pegawai, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, data_restoran_pegawaiLayout.createSequentialGroup()
+                            .addGroup(data_restoran_pegawaiLayout.createSequentialGroup()
                                 .addGroup(data_restoran_pegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(data_restoran_pegawaiLayout.createSequentialGroup()
                                         .addComponent(data_restoran_input_no_telp_pegawai_label)
@@ -284,13 +310,13 @@ public class PanelDataRestoran extends javax.swing.JPanel {
                                             .addComponent(data_restoran_input_gaji_pegawai, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addComponent(data_restoran_tambah_pegawai_button)
                                     .addComponent(data_restoran_pegawai_update_label))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
                                 .addGroup(data_restoran_pegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(data_restoran_pegawai_update_label1)
                                     .addComponent(data_restoran_preview_foto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(18, 18, 18)
                         .addComponent(data_restoran_selected_pegawai_foto, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(213, 213, 213))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         data_restoran_pegawaiLayout.setVerticalGroup(
             data_restoran_pegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -334,6 +360,188 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         );
 
         data_restoran_content.add(data_restoran_pegawai, "data_restoran_pegawai");
+
+        data_restoran_pegawai1.setBackground(new java.awt.Color(255, 255, 255));
+        data_restoran_pegawai1.setRequestFocusEnabled(false);
+
+        data_restoran_pegawai_update_label2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        data_restoran_pegawai_update_label2.setText("Tambah/Edit Pegawai");
+
+        data_restoran_input_nama_pegawai_label1.setText("Nama");
+
+        data_restoran_input_nama_pegawai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_input_nama_pegawai1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_input_gaji_pegawai_label1.setText("Gaji Pokok");
+
+        data_restoran_input_no_telp_pegawai_label1.setText("No. Telepon");
+
+        data_restoran_input_no_telp_pegawai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_input_no_telp_pegawai1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_input_foto_pegawai1.setText("Pilih Foto Pegawai (3x4)");
+        data_restoran_input_foto_pegawai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_input_foto_pegawai1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_reset_foto_pegawai1.setForeground(new java.awt.Color(255, 255, 255));
+        data_restoran_reset_foto_pegawai1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/reseticon.png"))); // NOI18N
+        data_restoran_reset_foto_pegawai1.setBorder(null);
+        data_restoran_reset_foto_pegawai1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_reset_foto_pegawai1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_tambah_pegawai_button1.setText("Tambah");
+        data_restoran_tambah_pegawai_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_tambah_pegawai_button1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_hapus_pegawai_button1.setText("Hapus");
+        data_restoran_hapus_pegawai_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_hapus_pegawai_button1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_ubah_pegawai_button1.setText("Ubah");
+        data_restoran_ubah_pegawai_button1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                data_restoran_ubah_pegawai_button1ActionPerformed(evt);
+            }
+        });
+
+        data_restoran_tabel_pegawai_label1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        data_restoran_tabel_pegawai_label1.setText("Daftar Pegawai");
+
+        container_pegawai1.setToolTipText("");
+
+        data_restoran_tabel_pegawai1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        container_pegawai1.setViewportView(data_restoran_tabel_pegawai1);
+
+        data_restoran_input_gaji_pegawai1.setModel(new javax.swing.SpinnerNumberModel(3000000, 0, 8000000, 100000));
+
+        data_restoran_selected_pegawai_foto1.setLabelFor(data_restoran_input_foto_pegawai);
+        data_restoran_selected_pegawai_foto1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        data_restoran_selected_pegawai_foto1.setMaximumSize(new java.awt.Dimension(150, 200));
+        data_restoran_selected_pegawai_foto1.setMinimumSize(new java.awt.Dimension(150, 200));
+        data_restoran_selected_pegawai_foto1.setPreferredSize(new java.awt.Dimension(150, 200));
+
+        data_restoran_preview_foto1.setLabelFor(data_restoran_input_foto_pegawai);
+        data_restoran_preview_foto1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        data_restoran_preview_foto1.setMaximumSize(new java.awt.Dimension(150, 200));
+        data_restoran_preview_foto1.setMinimumSize(new java.awt.Dimension(150, 200));
+        data_restoran_preview_foto1.setPreferredSize(new java.awt.Dimension(150, 200));
+
+        data_restoran_pegawai_update_label3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        data_restoran_pegawai_update_label3.setText("Preview");
+
+        javax.swing.GroupLayout data_restoran_pegawai1Layout = new javax.swing.GroupLayout(data_restoran_pegawai1);
+        data_restoran_pegawai1.setLayout(data_restoran_pegawai1Layout);
+        data_restoran_pegawai1Layout.setHorizontalGroup(
+            data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, data_restoran_pegawai1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                        .addComponent(data_restoran_ubah_pegawai_button1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(data_restoran_hapus_pegawai_button1))
+                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(data_restoran_tabel_pegawai_label1)
+                            .addComponent(container_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 535, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                                        .addComponent(data_restoran_input_no_telp_pegawai_label1)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(data_restoran_input_no_telp_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                                        .addComponent(data_restoran_input_foto_pegawai1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(data_restoran_reset_foto_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(data_restoran_input_gaji_pegawai_label1)
+                                            .addComponent(data_restoran_input_nama_pegawai_label1))
+                                        .addGap(27, 27, 27)
+                                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(data_restoran_input_nama_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(data_restoran_input_gaji_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(data_restoran_tambah_pegawai_button1)
+                                    .addComponent(data_restoran_pegawai_update_label2))
+                                .addGap(18, 18, 18)
+                                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(data_restoran_pegawai_update_label3)
+                                    .addComponent(data_restoran_preview_foto1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(data_restoran_selected_pegawai_foto1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(179, Short.MAX_VALUE))
+        );
+        data_restoran_pegawai1Layout.setVerticalGroup(
+            data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(data_restoran_pegawai_update_label2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(data_restoran_pegawai_update_label3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(data_restoran_pegawai1Layout.createSequentialGroup()
+                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(data_restoran_input_nama_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(data_restoran_input_nama_pegawai_label1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(data_restoran_input_gaji_pegawai_label1)
+                            .addComponent(data_restoran_input_gaji_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(data_restoran_input_no_telp_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(data_restoran_input_no_telp_pegawai_label1))
+                        .addGap(18, 18, 18)
+                        .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(data_restoran_input_foto_pegawai1)
+                            .addComponent(data_restoran_reset_foto_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(data_restoran_tambah_pegawai_button1))
+                    .addComponent(data_restoran_preview_foto1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(data_restoran_tabel_pegawai_label1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(data_restoran_selected_pegawai_foto1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(container_pegawai1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(data_restoran_pegawai1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(data_restoran_ubah_pegawai_button1)
+                    .addComponent(data_restoran_hapus_pegawai_button1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        data_restoran_content.add(data_restoran_pegawai1, "data_restoran_pegawai");
 
         data_restoran_sidebar.setBackground(new java.awt.Color(89, 131, 146));
         data_restoran_sidebar.setToolTipText("");
@@ -494,8 +702,6 @@ public class PanelDataRestoran extends javax.swing.JPanel {
                 data_restoran_input_foto_pegawai.setText("Pilih Foto Pegawai (3x4)");
                 data_restoran_input_nama_pegawai.setText(null);
                 data_restoran_input_no_telp_pegawai.setText(null);
-                data_restoran_tabel_pegawai.setEnabled(true);
-                data_restoran_hapus_pegawai_button.setEnabled(true);
                 load_data_pegawai();
             }
          
@@ -512,7 +718,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         
         if (confirmation == JOptionPane.YES_OPTION) {
             String foto_path = this.loaded_data_pegawai.get(row_index).foto;
-            File foto = new File(foto_path);
+            File foto_to_delete = new File(foto_path);
             String no_telp = (String) data_restoran_tabel_pegawai.getValueAt(row_index, 2);
             
             Connection db_connection = DBConnection.getConnection();
@@ -522,8 +728,8 @@ public class PanelDataRestoran extends javax.swing.JPanel {
                 stmt.setString(1, no_telp);
                 stmt.executeUpdate();
                 stmt.close();
-                if (foto.exists() && foto_path != null && !foto_path.isEmpty()) {
-                    foto.delete();
+                if (foto_to_delete.exists() && foto_path != null && !foto_path.isEmpty()) {
+                    foto_to_delete.delete();
                 }
             } catch (SQLException err) {
                 System.out.println("Error Deleting Table Data");
@@ -582,32 +788,176 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         this.input_foto_pegawai = null;
     }//GEN-LAST:event_data_restoran_reset_foto_pegawaiActionPerformed
 
+    private void data_restoran_ubah_pegawai_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_ubah_pegawai_buttonActionPerformed
+        if (data_restoran_tabel_pegawai.getSelectedRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "Pilih data pegawai yang ingin diubah!", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (this.edit_pegawai_mode) {
+            data_restoran_ubah_pegawai_button.setText("Ubah");
+            try {
+                // Update fields
+                String input_nama = data_restoran_input_nama_pegawai.getText();
+                int input_gaji = (int) data_restoran_input_gaji_pegawai.getValue();
+                String input_telp = data_restoran_input_no_telp_pegawai.getText();
+                String new_file_path = null;
+                User pegawai_being_edited = loaded_data_pegawai.get(this.edit_pegawai_row);
+                
+
+                Connection db_connection = DBConnection.getConnection();
+                String sql = "UPDATE user SET nama = ?, gaji_pokok = ?, no_telp = ? WHERE id = ?;";
+                PreparedStatement stmt1 = db_connection.prepareStatement(sql);
+                stmt1.setString(1, input_nama);
+                stmt1.setInt(2, input_gaji);
+                stmt1.setString(3, input_telp);
+                stmt1.setInt(4, pegawai_being_edited.id);
+                
+                stmt1.executeUpdate();
+                stmt1.close();
+                
+                // Update foto
+                db_connection = DBConnection.getConnection();
+                sql = "UPDATE user SET foto = ? WHERE id = ?;";
+                PreparedStatement stmt2 = db_connection.prepareStatement(sql);
+                if (this.input_foto_pegawai != null && this.input_foto_pegawai.getAbsolutePath() != pegawai_being_edited.foto) {
+                    try {
+                        new_file_path = dotenv.get("TARGET_FOLDER") + UUID.randomUUID().toString() + "." + Files.getFileExtension(input_foto_pegawai.getAbsolutePath());
+                        File new_file = new File(new_file_path);
+                        Files.copy(input_foto_pegawai, new_file);
+                        
+                        // Delete foto
+                        File foto_to_delete = new File(pegawai_being_edited.foto);
+                        foto_to_delete.delete();
+                        
+                        
+                        stmt2.setString(1, new_file_path);
+                    } catch (IOException ex) {
+                        Logger.getLogger(PanelDataRestoran.class.getName()).log(Level.SEVERE, "ERROR UPLOADING FILE", ex);
+                    }
+                } else if (this.input_foto_pegawai == null) {
+                    File foto_to_delete = new File(pegawai_being_edited.foto);
+                    foto_to_delete.delete();
+                    stmt2.setNull(1, java.sql.Types.VARCHAR);
+                } else if (this.input_foto_pegawai.getAbsolutePath() == pegawai_being_edited.foto) {
+                    stmt2.setString(1, pegawai_being_edited.foto);
+                }
+                
+                stmt2.setInt(2, pegawai_being_edited.id);
+                stmt2.executeUpdate();
+                stmt2.close();
+                
+            } catch (SQLException err) {
+                System.out.println("Error updating pegawai");
+                System.out.println(err.getMessage());
+            } finally {
+                this.input_foto_pegawai = null;
+                data_restoran_preview_foto.setIcon(null);
+                data_restoran_input_foto_pegawai.setText("Pilih Foto Pegawai (3x4)");
+                data_restoran_input_nama_pegawai.setText(null);
+                data_restoran_input_no_telp_pegawai.setText(null);
+                load_data_pegawai();
+            }
+            
+            
+        } else {
+            data_restoran_ubah_pegawai_button.setText("Apply");
+            this.edit_pegawai_row = data_restoran_tabel_pegawai.getSelectedRow();
+            
+            User pegawai_being_edited = this.loaded_data_pegawai.get(edit_pegawai_row);
+            
+            String foto_path = pegawai_being_edited.foto;
+            this.input_foto_pegawai = new File(foto_path);
+            data_restoran_input_foto_pegawai.setText("previous_image");
+            ImageIcon foto_pegawai = new ImageIcon(foto_path);
+            Image scaled_image = foto_pegawai.getImage().getScaledInstance(150, 200, Image.SCALE_SMOOTH);
+            data_restoran_preview_foto.setIcon( new ImageIcon(scaled_image));
+            
+            data_restoran_selected_pegawai_foto.setIcon(null);
+            
+            data_restoran_input_nama_pegawai.setText(pegawai_being_edited.nama);
+            data_restoran_input_no_telp_pegawai.setText(pegawai_being_edited.no_telp);
+        }
+ 
+        data_restoran_tabel_pegawai.setEnabled(!data_restoran_tabel_pegawai.isEnabled());
+        data_restoran_hapus_pegawai_button.setEnabled(!data_restoran_hapus_pegawai_button.isEnabled());
+        data_restoran_tambah_pegawai_button.setEnabled(!data_restoran_tambah_pegawai_button.isEnabled());
+        this.edit_pegawai_mode = !this.edit_pegawai_mode;
+    }//GEN-LAST:event_data_restoran_ubah_pegawai_buttonActionPerformed
+
+    private void data_restoran_input_nama_pegawai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_input_nama_pegawai1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_input_nama_pegawai1ActionPerformed
+
+    private void data_restoran_input_no_telp_pegawai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_input_no_telp_pegawai1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_input_no_telp_pegawai1ActionPerformed
+
+    private void data_restoran_input_foto_pegawai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_input_foto_pegawai1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_input_foto_pegawai1ActionPerformed
+
+    private void data_restoran_reset_foto_pegawai1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_reset_foto_pegawai1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_reset_foto_pegawai1ActionPerformed
+
+    private void data_restoran_tambah_pegawai_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_tambah_pegawai_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_tambah_pegawai_button1ActionPerformed
+
+    private void data_restoran_hapus_pegawai_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_hapus_pegawai_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_hapus_pegawai_button1ActionPerformed
+
+    private void data_restoran_ubah_pegawai_button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_ubah_pegawai_button1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_data_restoran_ubah_pegawai_button1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JScrollPane container_pegawai;
+    private javax.swing.JScrollPane container_pegawai1;
     private javax.swing.JPanel data_restoran_content;
     private javax.swing.JButton data_restoran_hapus_pegawai_button;
+    private javax.swing.JButton data_restoran_hapus_pegawai_button1;
     private javax.swing.JButton data_restoran_input_foto_pegawai;
+    private javax.swing.JButton data_restoran_input_foto_pegawai1;
     private javax.swing.JSpinner data_restoran_input_gaji_pegawai;
+    private javax.swing.JSpinner data_restoran_input_gaji_pegawai1;
     private javax.swing.JLabel data_restoran_input_gaji_pegawai_label;
+    private javax.swing.JLabel data_restoran_input_gaji_pegawai_label1;
     private javax.swing.JTextField data_restoran_input_nama_pegawai;
+    private javax.swing.JTextField data_restoran_input_nama_pegawai1;
     private javax.swing.JLabel data_restoran_input_nama_pegawai_label;
+    private javax.swing.JLabel data_restoran_input_nama_pegawai_label1;
     private javax.swing.JTextField data_restoran_input_no_telp_pegawai;
+    private javax.swing.JTextField data_restoran_input_no_telp_pegawai1;
     private javax.swing.JLabel data_restoran_input_no_telp_pegawai_label;
+    private javax.swing.JLabel data_restoran_input_no_telp_pegawai_label1;
     private javax.swing.JButton data_restoran_nav_meja;
     private javax.swing.JButton data_restoran_nav_menu;
     private javax.swing.JButton data_restoran_nav_pegawai;
     private javax.swing.JButton data_restoran_nav_penggajian;
     private javax.swing.JPanel data_restoran_pegawai;
+    private javax.swing.JPanel data_restoran_pegawai1;
     private javax.swing.JLabel data_restoran_pegawai_update_label;
     private javax.swing.JLabel data_restoran_pegawai_update_label1;
+    private javax.swing.JLabel data_restoran_pegawai_update_label2;
+    private javax.swing.JLabel data_restoran_pegawai_update_label3;
     private javax.swing.JLabel data_restoran_preview_foto;
+    private javax.swing.JLabel data_restoran_preview_foto1;
     private javax.swing.JButton data_restoran_reset_foto_pegawai;
+    private javax.swing.JButton data_restoran_reset_foto_pegawai1;
     private javax.swing.JLabel data_restoran_selected_pegawai_foto;
+    private javax.swing.JLabel data_restoran_selected_pegawai_foto1;
     private javax.swing.JPanel data_restoran_sidebar;
     private javax.swing.JTable data_restoran_tabel_pegawai;
+    private javax.swing.JTable data_restoran_tabel_pegawai1;
     private javax.swing.JLabel data_restoran_tabel_pegawai_label;
+    private javax.swing.JLabel data_restoran_tabel_pegawai_label1;
     private javax.swing.JButton data_restoran_tambah_pegawai_button;
+    private javax.swing.JButton data_restoran_tambah_pegawai_button1;
     private javax.swing.JButton data_restoran_ubah_pegawai_button;
+    private javax.swing.JButton data_restoran_ubah_pegawai_button1;
     // End of variables declaration//GEN-END:variables
 }
