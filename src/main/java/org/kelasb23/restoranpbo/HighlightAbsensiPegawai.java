@@ -33,13 +33,19 @@ public class HighlightAbsensiPegawai implements DateHighlightPolicy{
         for (AbsensiPegawai absen: this.absensi) {
             System.out.println(absen.tanggal);
             if (absen.tanggal.isEqual(date)) {
-                if (absen.hadir.equals("hadir")) {
+                if (absen.hadir.equals("Hadir")) {
                     return new HighlightInformation(Color.BLUE, Color.WHITE);
                 }
-                if (absen.hadir.equals("sakit")) {
+                if (absen.hadir.equals("Sakit")) {
                     return new HighlightInformation(Color.YELLOW, Color.BLACK);
                 }
-                if (absen.hadir.equals("absen")) {
+                if (absen.hadir.equals("Ijin")) {
+                    return new HighlightInformation(Color.YELLOW, Color.BLACK);
+                }
+                if (absen.hadir.equals("Telat")) {
+                    return new HighlightInformation(Color.ORANGE, Color.WHITE);
+                }
+                if (absen.hadir.equals("Absen")) {
                     return new HighlightInformation(Color.RED, Color.WHITE);
                 }
             }

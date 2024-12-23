@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
-  <Properties>
-    <Property name="defaultCloseOperation" type="int" value="3"/>
-  </Properties>
-  <SyntheticProperties>
-    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
-  </SyntheticProperties>
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -37,11 +30,11 @@
                               <Component id="tambah_menu" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
                               <Component id="hapus_menu" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="90" max="32767" attributes="0"/>
                               <Component id="ubah_menu" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="label_field_deskripsi" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="label_tabel_menu1" min="-2" max="-2" attributes="0"/>
+                          <Component id="label_tabel_menu1" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="label_field_nama" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -49,8 +42,8 @@
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="field_nama_menu" pref="310" max="32767" attributes="0"/>
-                                  <Component id="field_harga_menu" max="32767" attributes="0"/>
+                                  <Component id="field_nama_menu" alignment="0" pref="310" max="32767" attributes="0"/>
+                                  <Component id="field_harga_menu" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -61,10 +54,10 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="menu_container" min="-2" pref="500" max="-2" attributes="0"/>
-                          <Component id="label_tabel_menu" min="-2" max="-2" attributes="0"/>
+                          <Component id="menu_container" alignment="0" min="-2" pref="500" max="-2" attributes="0"/>
+                          <Component id="label_tabel_menu" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                   </Group>
@@ -85,7 +78,7 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="field_harga_menu" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="label_field_harga" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -96,7 +89,7 @@
                       <Component id="container_deskripsi" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="label_tabel_resep_menu" min="-2" pref="26" max="-2" attributes="0"/>
-                      <EmptySpace pref="13" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="resep_container" min="-2" pref="161" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -105,7 +98,7 @@
                           <Component id="ubah_menu" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="menu_container" pref="0" max="32767" attributes="0"/>
+                  <Component id="menu_container" alignment="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
           </Group>

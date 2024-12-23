@@ -21,6 +21,7 @@ import com.lowagie.text.html.simpleparser.HTMLWorker;
 import com.lowagie.text.pdf.draw.LineSeparator;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import static java.time.temporal.TemporalAdjusters.*;
 import io.github.cdimascio.dotenv.Dotenv;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -62,6 +63,7 @@ import org.kelasb23.restoranpbo.models.AbsensiPegawai;
 import org.kelasb23.restoranpbo.models.User;
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.CalendarPanel;
+import java.sql.Date;
 
 
 /**
@@ -69,6 +71,9 @@ import com.github.lgooddatepicker.components.CalendarPanel;
  * @author jeanjacket
  */
 public class PanelDataRestoran extends javax.swing.JPanel {
+    private DataRestoranMenu panel_menu = new DataRestoranMenu();
+
+    
     private Dotenv dotenv;
     private File input_foto_pegawai;
     private boolean edit_pegawai_mode;
@@ -111,6 +116,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
     private void load_data_pegawai() {
         model_tabel_pegawai.setRowCount(0);
 
+        
         Connection db_connection = DBConnection.getConnection();
         try {
             Statement stmt = db_connection.createStatement();
@@ -150,6 +156,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
      */
     public PanelDataRestoran() {
         initComponents();
+        data_restoran_content.add (panel_menu, "menu");    
         
         dotenv = Dotenv.configure().load();
         input_foto_pegawai = null;
@@ -216,7 +223,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
 
         
         
-        if (selected_row == -1 || potongan <= 0 || selected_date == null) {
+        if (selected_row == -1 || potongan < 0 || selected_date == null) {
             JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -237,24 +244,46 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         try{
             User user = loaded_data_pegawai.get(selected_row);
             Connection c = DBConnection.getConnection();
-            String sql = "INSERT INTO transaksi (nominal, tanggal, metode_pembayaran, jenis_transaksi) VALUES (?, ?, ?, ?)";
-            PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, user.gaji_pokok - potongan);
-            ps.setDate(2, new java.sql.Date(selected_date.getTime()));
-            ps.setString(3, (String)field_metode_penggajian.getSelectedItem());
-            ps.setString(4, "pengeluaran");
-            
-            ps.executeUpdate();
-
-            ResultSet rs = ps.getGeneratedKeys();
-
-            sql = "INSERT INTO penggajian (potongan, bonus, id_user, id_transaksi) VALUES (?, ?, ?, ?)";
-            ps = c.prepareStatement(sql);
-            ps.setInt(1, potongan);
-            ps.setInt(2, 0);
+            ArrayList<AbsensiPegawai> absensi_pegawai = this.get_absensi_pegawai(user);
+            // FIRST QUERY
+            String sql = """
+                         SELECT COUNT(absensi_pegawai.hadir) as jumlah_tidak_hadir
+                         FROM absensi_pegawai
+                         WHERE absensi_pegawai.hadir NOT LIKE '%Hadir%' AND absensi_pegawai.hadir NOT LIKE "%Sakit%"
+                         AND absensi_pegawai.tanggal BETWEEN ? and ?
+                         AND absensi_pegawai.id_user = ?
+                         """;
+            PreparedStatement ps = c.prepareStatement(sql);
+            ps.setDate(1, Date.valueOf(selected_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with(firstDayOfMonth()))); // FIRST DAY OF SELECTED MONTH
+            ps.setDate(2, Date.valueOf(selected_date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate().with(lastDayOfMonth()))); // LAST DAY OF SELECTED MONTH
             ps.setInt(3, user.id);
-            if (rs.next()) {
-                   ps.setInt(4, rs.getInt(1));  // Ambil id menu yang baru saja dimasukkan
+            
+           
+            
+            ResultSet rs1 = ps.executeQuery();
+            if (rs1.next()) {
+                int jumlah_tidak_hadir = rs1.getInt("jumlah_tidak_hadir");
+            
+                // SECOND QUERY
+                sql = "INSERT INTO transaksi (nominal, tanggal, metode_pembayaran, jenis_transaksi) VALUES (?, ?, ?, ?)";
+                ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+                ps.setInt(1, user.gaji_pokok - potongan - 50000 * jumlah_tidak_hadir);
+                ps.setDate(2, new java.sql.Date(selected_date.getTime()));
+                ps.setString(3, (String)field_metode_penggajian.getSelectedItem());
+                ps.setString(4, "pengeluaran");
+
+                ps.executeUpdate();
+
+                ResultSet rs = ps.getGeneratedKeys();
+
+                sql = "INSERT INTO penggajian (potongan, bonus, id_user, id_transaksi) VALUES (?, ?, ?, ?)";
+                ps = c.prepareStatement(sql);
+                ps.setInt(1, potongan + 50000 * jumlah_tidak_hadir);
+                ps.setInt(2, 0);
+                ps.setInt(3, user.id);
+                if (rs.next()) {
+                       ps.setInt(4, rs.getInt(1));  // Ambil id menu yang baru saja dimasukkan
+                }
             }
             
             ps.executeUpdate();
@@ -588,7 +617,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         data_restoran_sidebar.setToolTipText("");
 
         data_restoran_nav_menu.setText("MENU");
-        data_restoran_nav_menu.setBackground(new java.awt.Color(239, 246, 224));
+        data_restoran_nav_menu.setBackground(new java.awt.Color(150, 149, 146));
         data_restoran_nav_menu.setFont(new java.awt.Font("JetBrainsMono NF ExtraBold", 1, 18)); // NOI18N
         data_restoran_nav_menu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -597,7 +626,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
         });
 
         data_restoran_nav_pegawai.setText("PEGAWAI");
-        data_restoran_nav_pegawai.setBackground(new java.awt.Color(150, 149, 146));
+        data_restoran_nav_pegawai.setBackground(new java.awt.Color(239, 246, 224));
         data_restoran_nav_pegawai.setFont(new java.awt.Font("JetBrainsMono NF ExtraBold", 1, 18)); // NOI18N
         data_restoran_nav_pegawai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -630,9 +659,9 @@ public class PanelDataRestoran extends javax.swing.JPanel {
             data_restoran_sidebarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(data_restoran_sidebarLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(data_restoran_nav_menu)
-                .addGap(18, 18, 18)
                 .addComponent(data_restoran_nav_pegawai)
+                .addGap(18, 18, 18)
+                .addComponent(data_restoran_nav_menu)
                 .addGap(18, 18, 18)
                 .addComponent(data_restoran_nav_meja)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -660,7 +689,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
     private void data_restoran_nav_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_nav_menuActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) (data_restoran_content.getLayout());
-        cl.show(data_restoran_content, "keuangan");
+        cl.show(data_restoran_content, "menu");
         data_restoran_nav_menu.setBackground(new java.awt.Color(239, 246, 224));
         data_restoran_nav_pegawai.setBackground(new java.awt.Color(150, 149, 146));
         data_restoran_nav_meja.setBackground(new java.awt.Color(150, 149, 146));

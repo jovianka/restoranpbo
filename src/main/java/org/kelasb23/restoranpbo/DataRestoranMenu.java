@@ -1,35 +1,44 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package org.kelasb23.restoranpbo;
-import java.sql.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.*;
-import java.util.*;
-import javax.swing.event.ListSelectionListener;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import javax.swing.JFormattedTextField;
+import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 /**
  *
- * @author bayub
+ * @author jeanjacket
  */
-public class MenuWrapper extends javax.swing.JFrame {
-    
+public class DataRestoranMenu extends javax.swing.JPanel {
+
     private DefaultTableModel daftar_menu;
     private DefaultTableModel daftar_resep;
     TableRowSorter<DefaultTableModel> sorter;
     private int selected_row;
     boolean select = false;
 
-
     /**
      * Creates new form MenuWrapper
      */
-    public MenuWrapper() {
+    public DataRestoranMenu() {
         initComponents();
-        
+
         daftar_menu = new DefaultTableModel();
         daftar_resep = new DefaultTableModel(new String[]{"id", "Nama", "Satuan", "Jumlah"}, 0) {
             @Override
@@ -41,41 +50,33 @@ public class MenuWrapper extends javax.swing.JFrame {
                 return false; // Disable editing for all other columns
             }
         };
-        
+
         sorter = new TableRowSorter<>(daftar_resep);
-        
-        
-        
+
         main_tabel_menu.setModel(daftar_menu);
         main_tabel_resep.setModel(daftar_resep);
-        
+
         main_tabel_resep.setRowSorter(sorter);
-        
+
         daftar_menu.addColumn("Id");
         daftar_menu.addColumn("Nama");
         daftar_menu.addColumn("Harga");
         daftar_menu.addColumn("Deskripsi");
-        
-        
+
         main_tabel_resep.getColumnModel().getColumn(0).setMaxWidth(0);
         main_tabel_resep.getColumnModel().getColumn(0).setMinWidth(0);
         main_tabel_resep.getColumnModel().getColumn(0).setPreferredWidth(0);
         main_tabel_resep.getColumnModel().getColumn(0).setWidth(0);
-       
+
         main_tabel_menu.getColumnModel().getColumn(0).setMaxWidth(0);
         main_tabel_menu.getColumnModel().getColumn(0).setMinWidth(0);
         main_tabel_menu.getColumnModel().getColumn(0).setPreferredWidth(0);
         main_tabel_menu.getColumnModel().getColumn(0).setWidth(0);
-        
-        
-        
 
-        
         loadData();
-        
-        
-        hapus_menu.addActionListener(evt ->{
-            
+
+        hapus_menu.addActionListener(evt -> {
+
             if (selected_row <= -1) {
                 JOptionPane.showMessageDialog(this, "Please select a row to delete!", "Error", JOptionPane.WARNING_MESSAGE);
                 return;
@@ -87,30 +88,26 @@ public class MenuWrapper extends javax.swing.JFrame {
                 deleteFromDatabase();
             }
         });
-        
-        
-        
-        tambah_menu.addActionListener(evt ->{
-           getInput(); 
+
+        tambah_menu.addActionListener(evt -> {
+            getInput();
         });
-        
+
         ubah_menu.addActionListener(evt -> {
             ubah_data();
         });
-        
-        
+
         main_tabel_menu.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 // Cek jika tidak ada baris yang dipilih
                 int selectedRow = main_tabel_menu.getSelectedRow();
-                
+
                 if (selectedRow == -1) {
                     return; // Tidak ada baris yang dipilih
                 }
-                
+
                 selected_row = selectedRow;
-                
 
                 // Kosongkan field sebelumnya
                 clearFields();
@@ -121,27 +118,26 @@ public class MenuWrapper extends javax.swing.JFrame {
                 JSpinner.NumberEditor editor = (JSpinner.NumberEditor) field_harga_menu.getEditor();
                 editor.getTextField().setEditable(false);
                 area_deskripsi.setEditable(false);
-                
+
                 tambah_menu.setText("Bersihkan");
                 tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
-                tambah_menu.addActionListener(evt->tombol_bersihkan());
-                
+                tambah_menu.addActionListener(evt -> tombol_bersihkan());
 
                 // Ambil data dari baris yang dipilih
                 String id = (String) daftar_menu.getValueAt(selectedRow, 0);
                 String nama = (String) daftar_menu.getValueAt(selectedRow, 1);
                 Integer harga = Integer.parseInt((String) daftar_menu.getValueAt(selectedRow, 2));
                 String deskripsi = (String) daftar_menu.getValueAt(selectedRow, 3);
-                
+
                 field_nama_menu.setText(nama);
                 field_harga_menu.setValue(harga);
                 area_deskripsi.setText(deskripsi);
 
                 // Ambil data tambahan berdasarkan id_menu
                 try (Connection c = DBConnection.getConnection()) {
-                    String sql = "SELECT inventory.nama, inventory.satuan, resep.jumlah, resep.id_inventory " +
-                                 "FROM inventory JOIN resep ON inventory.id = resep.id_inventory " +
-                                 "WHERE resep.id_menu = ? ORDER BY inventory.nama ASC";
+                    String sql = "SELECT inventory.nama, inventory.satuan, resep.jumlah, resep.id_inventory "
+                            + "FROM inventory JOIN resep ON inventory.id = resep.id_inventory "
+                            + "WHERE resep.id_menu = ? ORDER BY inventory.nama ASC";
 
                     try (PreparedStatement stmt = c.prepareStatement(sql)) {
                         stmt.setInt(1, Integer.parseInt(id));  // Set parameter id_menu
@@ -157,36 +153,34 @@ public class MenuWrapper extends javax.swing.JFrame {
                                 // Tambahkan ke model tabel
                                 daftar_resep.addRow(o);
                             }
-                            
+
                             r.close();
                         }
                         stmt.close();
                     }
-                    
+
                     c.close();
-                    
+
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(null, "Gagal memuat data!", "Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
-                
+
             }
-            
-            
-            
-            
+
         });
 
-        
-        daftar_resep.addTableModelListener(e->{
-            if(e.getColumn() == 3){
+        daftar_resep.addTableModelListener(e -> {
+            if (e.getColumn() == 3) {
                 updateRowOrder();
             }
         });
-    };
+    }
+
+    ;
            
     
-    public void clearFields(){
+    public void clearFields() {
         field_nama_menu.setText("");
         field_harga_menu.setValue(0);
         area_deskripsi.setText("");
@@ -194,36 +188,38 @@ public class MenuWrapper extends javax.swing.JFrame {
         daftar_resep.getDataVector().removeAllElements();
         daftar_resep.fireTableDataChanged();
     }
-    
-    public void loadData(){
+
+    public void loadData() {
         daftar_menu.getDataVector().removeAllElements();
         daftar_menu.fireTableDataChanged();
-        try{
-            Connection c = DBConnection.getConnection(); Statement s = c.createStatement();
+        try {
+            Connection c = DBConnection.getConnection();
+            Statement s = c.createStatement();
             String sql = "SELECT * FROM menu ORDER BY nama ASC";
             ResultSet r = s.executeQuery(sql);
-            while(r.next()){
-                Object[] o = new Object[4];               
+            while (r.next()) {
+                Object[] o = new Object[4];
                 o[0] = r.getString("id");
                 o[1] = r.getString("nama");
                 o[2] = r.getString("harga");
                 o[3] = r.getString("deskripsi");
                 daftar_menu.addRow(o);
             }
-            
+
             r.close();
             s.close();
             c.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data!", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        
-        try{
-            Connection c = DBConnection.getConnection(); Statement s = c.createStatement();
+
+        try {
+            Connection c = DBConnection.getConnection();
+            Statement s = c.createStatement();
             String sql = "SELECT id, nama, satuan FROM inventory WHERE inventory.jenis_inventory = 'Bahan' ORDER BY nama ASC";
             ResultSet r = s.executeQuery(sql);
-            while(r.next()){
+            while (r.next()) {
                 Object[] o = new Object[4];
                 o[0] = r.getString("id");
                 o[1] = r.getString("nama");
@@ -231,17 +227,16 @@ public class MenuWrapper extends javax.swing.JFrame {
                 o[3] = "";
                 daftar_resep.addRow(o);
             }
-            
+
             r.close();
             s.close();
             c.close();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data!", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
-    
-    
+
     public void getInput() {
         String nama = field_nama_menu.getText();
         Integer harga = (Integer) field_harga_menu.getValue();
@@ -279,7 +274,6 @@ public class MenuWrapper extends javax.swing.JFrame {
         saveToDatabase(nama, harga, deskripsi, jumlah, id);
     }
 
-    
     private void updateRowOrder() {
         // Mengambil jumlah baris
         int selectedRow = main_tabel_resep.getSelectedRow();
@@ -302,8 +296,7 @@ public class MenuWrapper extends javax.swing.JFrame {
             // Menghapus baris lama dan menambahkannya di atas
             daftar_resep.removeRow(selectedRow);
             daftar_resep.insertRow(0, rowData);  // Menambahkan baris di atas
-        }
-        // Jika jumlah kosong, kembalikan baris ke urutan semula
+        } // Jika jumlah kosong, kembalikan baris ke urutan semula
         else {
             // Pisahkan baris yang memiliki nilai di kolom jumlah dan yang tidak
             List<Object[]> rowsWithValues = new ArrayList<>();
@@ -348,17 +341,16 @@ public class MenuWrapper extends javax.swing.JFrame {
             }
         }
     }
-    
-    
-    public void saveToDatabase (String nama, Integer harga, String deskripsi, ArrayList<Integer> jumlah,  ArrayList<Integer> id){
-        try{
+
+    public void saveToDatabase(String nama, Integer harga, String deskripsi, ArrayList<Integer> jumlah, ArrayList<Integer> id) {
+        try {
             Connection c = DBConnection.getConnection();
             String sql = "INSERT INTO menu (nama, harga, deskripsi) VALUES (?, ?, ?)";
             PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, nama);
             ps.setInt(2, harga);
             ps.setString(3, deskripsi);
-            
+
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -367,49 +359,47 @@ public class MenuWrapper extends javax.swing.JFrame {
             ps = c.prepareStatement(sql);
             for (int i = 0; i < id.size(); i++) {
                 if (rs.next()) {
-                   ps.setInt(1, rs.getInt(1));  // Ambil id menu yang baru saja dimasukkan
+                    ps.setInt(1, rs.getInt(1));  // Ambil id menu yang baru saja dimasukkan
                 }
                 ps.setInt(2, id.get(i));
-                ps.setInt(3, jumlah.get(i));            
+                ps.setInt(3, jumlah.get(i));
                 ps.executeUpdate();
 
             }
-            
+
             ps.close();
             c.close();
-            
+
             loadData(); // Refresh the table
             clearFields(); // Clear input fields
-            
+
             JOptionPane.showMessageDialog(this, "Menu berhasil ditambahkan!", "Success", JOptionPane.INFORMATION_MESSAGE);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data!", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        
+
         loadData();
     }
-    
-    
+
     public void deleteFromDatabase() {
         int selectedRow = selected_row;
         Integer id_menu = Integer.parseInt((String) daftar_menu.getValueAt(selectedRow, 0));
         String nama = field_nama_menu.getText();
         Integer harga = (Integer) field_harga_menu.getValue();
         String deskripsi = area_deskripsi.getText();
-        
+
         boolean resep_added = false;
-        
+
         ArrayList<Integer> id = new ArrayList<>();
-        
-        
+
         int rowCount = main_tabel_resep.getRowCount();
-        for(int i= 0; i < rowCount; i++){
+        for (int i = 0; i < rowCount; i++) {
             Object value = main_tabel_resep.getValueAt(i, 3);
-            if (main_tabel_resep.getValueAt(i, 3) != ""){
+            if (main_tabel_resep.getValueAt(i, 3) != "") {
                 value = main_tabel_resep.getValueAt(i, 0);
                 id.add(Integer.parseInt(value.toString()));
-                
+
                 resep_added = true;
             }
         }
@@ -419,22 +409,21 @@ public class MenuWrapper extends javax.swing.JFrame {
             PreparedStatement ps = c.prepareStatement(sql);
             ps.setInt(1, id_menu);
             ps.executeUpdate();
-            
+
             sql = "DELETE FROM resep WHERE resep.id_menu = ? AND resep.id_inventory = ?";
             ps = c.prepareStatement(sql);
-            
-            
+
             ps = c.prepareStatement(sql);
             for (int i = 0; i < id.size(); i++) {
                 ps.setInt(1, id_menu);
-                ps.setInt(2, id.get(i));            
+                ps.setInt(2, id.get(i));
                 ps.executeUpdate();
 
             }
-            
+
             ps.close();
             c.close();
-            
+
             clearFields();
 
             JOptionPane.showMessageDialog(this, "Menu Berhasil!", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -443,92 +432,91 @@ public class MenuWrapper extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Gagal Hapus Menu, Silahkan Coba Kembali.", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-        
+
         selected_row = -1;
     }
 
-    public void ubah_data(){
+    public void ubah_data() {
         if (selected_row <= -1) {
-                JOptionPane.showMessageDialog(this, "Please select a row to edit!", "Error", JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            field_nama_menu.setEditable(true);
-            main_tabel_resep.setEnabled(true);
-            main_tabel_menu.setEnabled(false); 
-            JSpinner.NumberEditor editor = (JSpinner.NumberEditor) field_harga_menu.getEditor();
-            editor.getTextField().setEditable(true);
-            area_deskripsi.setEditable(true);
-            // Get current data from the selected row
-            
-            Integer id = Integer.parseInt((String) daftar_menu.getValueAt(selected_row, 0));
-            
-            int rowCount = main_tabel_resep.getRowCount();
-            ArrayList<Integer> id_bahan = new ArrayList<>();
-            for(int i= 0; i < rowCount; i++){
-                id_bahan.add(Integer.parseInt((String) main_tabel_resep.getValueAt(i, 3)));
-                Object value = main_tabel_resep.getValueAt(i, 3);
-            }
-            
-            try (Connection c = DBConnection.getConnection()) {
-                
-                String sql = "SELECT inventory.nama, inventory.satuan, inventory.id FROM inventory WHERE inventory.id NOT IN (SELECT resep.id_inventory FROM resep WHERE resep.id_menu = ?) ORDER BY inventory.nama ASC";
+            JOptionPane.showMessageDialog(this, "Please select a row to edit!", "Error", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-                try (PreparedStatement stmt = c.prepareStatement(sql)) {
-                    // Set the id_menu parameter
-                    stmt.setInt(1, id);
+        field_nama_menu.setEditable(true);
+        main_tabel_resep.setEnabled(true);
+        main_tabel_menu.setEnabled(false);
+        JSpinner.NumberEditor editor = (JSpinner.NumberEditor) field_harga_menu.getEditor();
+        editor.getTextField().setEditable(true);
+        area_deskripsi.setEditable(true);
+        // Get current data from the selected row
 
-                    // Execute the query
-                    try (ResultSet r = stmt.executeQuery()) {
-                        while (r.next()) {
-                            Object[] o = new Object[4];
-                            o[0] = r.getString("inventory.id");
-                            o[1] = r.getString("nama");
-                            o[2] = r.getString("satuan");
-                            o[3] = "";
+        Integer id = Integer.parseInt((String) daftar_menu.getValueAt(selected_row, 0));
 
-                            // Add to table model (update daftar_menu here)
-                            daftar_resep.addRow(o);
-                        }
-                        
-                        r.close();
+        int rowCount = main_tabel_resep.getRowCount();
+        ArrayList<Integer> id_bahan = new ArrayList<>();
+        for (int i = 0; i < rowCount; i++) {
+            id_bahan.add(Integer.parseInt((String) main_tabel_resep.getValueAt(i, 3)));
+            Object value = main_tabel_resep.getValueAt(i, 3);
+        }
+
+        try (Connection c = DBConnection.getConnection()) {
+
+            String sql = "SELECT inventory.nama, inventory.satuan, inventory.id FROM inventory WHERE inventory.id NOT IN (SELECT resep.id_inventory FROM resep WHERE resep.id_menu = ?) ORDER BY inventory.nama ASC";
+
+            try (PreparedStatement stmt = c.prepareStatement(sql)) {
+                // Set the id_menu parameter
+                stmt.setInt(1, id);
+
+                // Execute the query
+                try (ResultSet r = stmt.executeQuery()) {
+                    while (r.next()) {
+                        Object[] o = new Object[4];
+                        o[0] = r.getString("inventory.id");
+                        o[1] = r.getString("nama");
+                        o[2] = r.getString("satuan");
+                        o[3] = "";
+
+                        // Add to table model (update daftar_menu here)
+                        daftar_resep.addRow(o);
                     }
-                    
-                    stmt.close();
+
+                    r.close();
                 }
-                
-                c.close();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, "Gagal Menampilkan Data!", "Error", JOptionPane.ERROR_MESSAGE);
-                e.printStackTrace();
+
+                stmt.close();
             }
 
+            c.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Gagal Menampilkan Data!", "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
 
-            
-            main_tabel_menu.setEnabled(false);
-            tambah_menu.setText("Perbarui");
-            ubah_menu.setText("Kembali");
-            hapus_menu.setEnabled(false);
-            ubah_menu.removeActionListener(ubah_menu.getActionListeners()[0]);
-            tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
-            ubah_menu.addActionListener(updateEvent->kembali());
-            tambah_menu.addActionListener(updateEvent -> perbarui_data(id_bahan, id));
+        main_tabel_menu.setEnabled(false);
+        tambah_menu.setText("Perbarui");
+        ubah_menu.setText("Kembali");
+        hapus_menu.setEnabled(false);
+        ubah_menu.removeActionListener(ubah_menu.getActionListeners()[0]);
+        tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
+        ubah_menu.addActionListener(updateEvent -> kembali());
+        tambah_menu.addActionListener(updateEvent -> perbarui_data(id_bahan, id));
     }
-    public void kembali(){
+
+    public void kembali() {
         main_tabel_menu.setEnabled(true);
         tambah_menu.setText("Tambah");
         ubah_menu.setText("Edit");
         hapus_menu.setEnabled(true);
         tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
         ubah_menu.removeActionListener(ubah_menu.getActionListeners()[0]);
-        ubah_menu.addActionListener(evt->ubah_data());
-        tambah_menu.addActionListener(evt->getInput());
+        ubah_menu.addActionListener(evt -> ubah_data());
+        tambah_menu.addActionListener(evt -> getInput());
         selected_row = -1;
         clearFields();
         loadData();
     }
-    
-    public void tombol_bersihkan(){
+
+    public void tombol_bersihkan() {
         tambah_menu.setText("Tambah");
         main_tabel_resep.setEnabled(true);
         field_nama_menu.setEditable(true);  // Disables editing without changing appearance
@@ -537,22 +525,21 @@ public class MenuWrapper extends javax.swing.JFrame {
         area_deskripsi.setEditable(true);
         selected_row = -1;
         tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
-        tambah_menu.addActionListener(evt->getInput());
+        tambah_menu.addActionListener(evt -> getInput());
         clearFields();
         loadData();
     }
-    
-    public void perbarui_data(ArrayList <Integer> id_bahan, int id_menu){
+
+    public void perbarui_data(ArrayList<Integer> id_bahan, int id_menu) {
         String nama = field_nama_menu.getText();
         Integer harga = (Integer) field_harga_menu.getValue();
         String deskripsi = area_deskripsi.getText();
-        
+
         boolean resep_added = false;
-        
+
         ArrayList<Integer> jumlah = new ArrayList<>();
         ArrayList<Integer> id_bahan_baru = new ArrayList<>();
-        
-        
+
         int rowCount = main_tabel_resep.getRowCount();
         for (int i = 0; i < rowCount; i++) {
             Object value = main_tabel_resep.getValueAt(i, 3);
@@ -566,12 +553,11 @@ public class MenuWrapper extends javax.swing.JFrame {
             }
         }
 
-        
         if (nama.isEmpty() || harga <= 0 || deskripsi.isEmpty() || !resep_added) {
-                    JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.WARNING_MESSAGE);
-                    return;
+            JOptionPane.showMessageDialog(this, "All fields are required!", "Validation Error", JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        
+
         Iterator<Integer> iter = id_bahan.iterator();
         while (iter.hasNext()) {
             Integer id = iter.next();
@@ -579,12 +565,12 @@ public class MenuWrapper extends javax.swing.JFrame {
                 iter.remove();
             }
         }
-        
+
         update_database(nama, harga, deskripsi, jumlah, id_bahan_baru, id_bahan, id_menu);
     }
-    
-    public void update_database(String nama, Integer harga, String deskripsi, ArrayList <Integer> jumlah, ArrayList <Integer> id_bahan_baru, ArrayList <Integer> id_bahan, int id_menu){
-        try{
+
+    public void update_database(String nama, Integer harga, String deskripsi, ArrayList<Integer> jumlah, ArrayList<Integer> id_bahan_baru, ArrayList<Integer> id_bahan, int id_menu) {
+        try {
             Connection c = DBConnection.getConnection();
             String sql = "UPDATE menu SET menu.nama = ?, menu.harga = ?, menu.deskripsi = ? WHERE menu.id = ?";
             PreparedStatement ps = c.prepareStatement(sql);
@@ -592,52 +578,49 @@ public class MenuWrapper extends javax.swing.JFrame {
             ps.setInt(2, harga);
             ps.setString(3, deskripsi);
             ps.setInt(4, id_menu);
-            
+
             ps.executeUpdate();
-            
-            
 
             sql = "DELETE FROM resep WHERE resep.id_menu = ? AND resep.id_inventory =?";
             ps = c.prepareStatement(sql);
-            for (int i = 0; i < id_bahan.size(); i++){
+            for (int i = 0; i < id_bahan.size(); i++) {
                 ps.setInt(1, id_menu);
                 ps.setInt(2, id_bahan.get(i));
-                
+
                 ps.executeUpdate();
             }
-            
+
             sql = "INSERT INTO resep (id_menu, id_inventory, jumlah) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE jumlah = VALUES(jumlah)";
             ps = c.prepareStatement(sql);
             for (int i = 0; i < id_bahan_baru.size(); i++) {
                 ps.setInt(1, id_menu);
                 ps.setInt(2, id_bahan_baru.get(i));
                 ps.setInt(3, jumlah.get(i));
-                
+
                 ps.executeUpdate();
 
             }
-            
+
             ps.close();
-            c.close(); 
-            
+            c.close();
+
             main_tabel_menu.setEnabled(true);
             tambah_menu.setText("Tambah");
             ubah_menu.setText("Edit");
             hapus_menu.setEnabled(true);
             tambah_menu.removeActionListener(tambah_menu.getActionListeners()[0]);
             ubah_menu.removeActionListener(ubah_menu.getActionListeners()[0]);
-            ubah_menu.addActionListener(evt->ubah_data());
-            tambah_menu.addActionListener(evt->getInput());
+            ubah_menu.addActionListener(evt -> ubah_data());
+            tambah_menu.addActionListener(evt -> getInput());
             selected_row = -1;
             JOptionPane.showMessageDialog(this, "Menu berhasil diubah!", "Success", JOptionPane.INFORMATION_MESSAGE);
             clearFields();
             loadData();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Gagal memuat data!", "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -665,8 +648,6 @@ public class MenuWrapper extends javax.swing.JFrame {
         label_field_deskripsi = new javax.swing.JLabel();
         label_tabel_menu1 = new javax.swing.JLabel();
         field_harga_menu = new javax.swing.JSpinner();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         main_tabel_menu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -741,8 +722,8 @@ public class MenuWrapper extends javax.swing.JFrame {
         field_harga_menu.setName(""); // NOI18N
         JFormattedTextField textField = ((JSpinner.DefaultEditor) field_harga_menu.getEditor()).getTextField(); textField.setHorizontalAlignment(JTextField.LEFT);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
@@ -758,7 +739,7 @@ public class MenuWrapper extends javax.swing.JFrame {
                                 .addComponent(tambah_menu)
                                 .addGap(64, 64, 64)
                                 .addComponent(hapus_menu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                                 .addComponent(ubah_menu))
                             .addComponent(label_field_deskripsi)
                             .addComponent(label_tabel_menu1)
@@ -775,7 +756,7 @@ public class MenuWrapper extends javax.swing.JFrame {
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addGap(1, 1, 1)
                                     .addComponent(resep_container, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(menu_container, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(label_tabel_menu))
@@ -803,7 +784,7 @@ public class MenuWrapper extends javax.swing.JFrame {
                         .addComponent(container_deskripsi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(label_tabel_resep_menu, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(resep_container, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -813,8 +794,6 @@ public class MenuWrapper extends javax.swing.JFrame {
                     .addComponent(menu_container, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(60, 60, 60))
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void field_nama_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_field_nama_menuActionPerformed
@@ -829,40 +808,6 @@ public class MenuWrapper extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_hapus_menu_menuActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuWrapper.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuWrapper.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuWrapper.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuWrapper.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuWrapper().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea area_deskripsi;

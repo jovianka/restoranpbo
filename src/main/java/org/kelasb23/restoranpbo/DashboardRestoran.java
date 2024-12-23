@@ -18,7 +18,8 @@ public class DashboardRestoran extends javax.swing.JFrame {
 
     private PanelKeuangan panel_keuangan = new PanelKeuangan();
     private PanelDataRestoran panel_data_restoran = new PanelDataRestoran();
-    private PanelDataBooking panel_data_booking = new PanelDataBooking();    
+    private PanelDataBooking panel_data_booking = new PanelDataBooking();
+    
     
     /**
      * Creates new form DashboardRestoran
