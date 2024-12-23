@@ -14,6 +14,6 @@ import java.time.*;
 public class AbsensiPegawai {
     public int id;
     public LocalDate tanggal;
-    public boolean hadir;
+    public String hadir;
     public int id_user;
 }

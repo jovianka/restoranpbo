@@ -18,10 +18,7 @@ public class DashboardRestoran extends javax.swing.JFrame {
 
     private PanelKeuangan panel_keuangan = new PanelKeuangan();
     private PanelDataRestoran panel_data_restoran = new PanelDataRestoran();
-    
-    
-    // UNTUK TAMBAH PEGAWAI/EDIT
-    
+    private PanelDataBooking panel_data_booking = new PanelDataBooking();    
     
     /**
      * Creates new form DashboardRestoran
@@ -30,6 +27,7 @@ public class DashboardRestoran extends javax.swing.JFrame {
         initComponents();
         main_content_panel.add(panel_data_restoran, "data_restoran");
         main_content_panel.add(panel_keuangan, "keuangan");
+        main_content_panel.add(panel_data_booking, "booking");
 
     }
 
@@ -52,7 +50,7 @@ public class DashboardRestoran extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("RESTORAN PBO");
-        setPreferredSize(new java.awt.Dimension(1200, 800));
+        setPreferredSize(new java.awt.Dimension(1400, 800));
 
         main_panel.setBackground(new java.awt.Color(0, 51, 0));
 
@@ -151,9 +149,9 @@ public class DashboardRestoran extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 254, Short.MAX_VALUE)
+                .addGap(0, 354, Short.MAX_VALUE)
                 .addComponent(main_panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 254, Short.MAX_VALUE))
+                .addGap(0, 354, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +191,7 @@ public class DashboardRestoran extends javax.swing.JFrame {
     private void main_booking_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_main_booking_buttonActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) (main_content_panel.getLayout());
-        cl.show(main_content_panel, "keuangan");
+        cl.show(main_content_panel, "booking");
         main_data_restoran_button.setBackground(new java.awt.Color(150, 149, 146));
         main_keuangan_button.setBackground(new java.awt.Color(150, 149, 146));
         main_booking_button.setBackground(new java.awt.Color(239, 246, 224));
