@@ -1108,8 +1108,8 @@ public class PanelKeuangan extends javax.swing.JPanel {
         );
         side_barLayout.setVerticalGroup(
             side_barLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, side_barLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(side_barLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addComponent(dashboard_button_side)
                 .addGap(18, 18, 18)
                 .addComponent(laporan_button_edit)
@@ -1117,10 +1117,10 @@ public class PanelKeuangan extends javax.swing.JPanel {
                 .addComponent(transaksi_button_edit)
                 .addGap(18, 18, 18)
                 .addComponent(payroll_button_edit)
-                .addGap(122, 122, 122))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        Parent.setPreferredSize(new java.awt.Dimension(806, 503));
+        Parent.setPreferredSize(new java.awt.Dimension(1000, 503));
         Parent.setRequestFocusEnabled(false);
         Parent.setLayout(new java.awt.CardLayout());
 
@@ -1410,7 +1410,7 @@ public class PanelKeuangan extends javax.swing.JPanel {
                     .addComponent(laporan_ending_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(99, 99, 99)
                 .addComponent(create_laporan)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
 
         Parent.add(main_content_laporan, "card5");
@@ -1464,10 +1464,10 @@ public class PanelKeuangan extends javax.swing.JPanel {
         pie_chart_transaksi.setLayout(pie_chart_transaksiLayout);
         pie_chart_transaksiLayout.setHorizontalGroup(
             pie_chart_transaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pie_chart_transaksiLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pie_chart_transaksiLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
                 .addComponent(header3)
-                .addGap(70, 70, 70))
+                .addContainerGap(77, Short.MAX_VALUE))
         );
         pie_chart_transaksiLayout.setVerticalGroup(
             pie_chart_transaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1486,7 +1486,7 @@ public class PanelKeuangan extends javax.swing.JPanel {
                 .addGroup(main_content_transaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(main_content_transaksiLayout.createSequentialGroup()
                         .addComponent(header_transaksi)
-                        .addGap(0, 416, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, main_content_transaksiLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(transaksi_month, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1511,7 +1511,7 @@ public class PanelKeuangan extends javax.swing.JPanel {
                 .addGroup(main_content_transaksiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pie_chart_transaksi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(scroll_tabel_keuangan_transaksi, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         Parent.add(main_content_transaksi, "card4");
@@ -1565,10 +1565,10 @@ public class PanelKeuangan extends javax.swing.JPanel {
         pie_chart_payroll.setLayout(pie_chart_payrollLayout);
         pie_chart_payrollLayout.setHorizontalGroup(
             pie_chart_payrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pie_chart_payrollLayout.createSequentialGroup()
-                .addContainerGap(73, Short.MAX_VALUE)
+            .addGroup(pie_chart_payrollLayout.createSequentialGroup()
+                .addGap(71, 71, 71)
                 .addComponent(header4)
-                .addGap(70, 70, 70))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         pie_chart_payrollLayout.setVerticalGroup(
             pie_chart_payrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1614,7 +1614,7 @@ public class PanelKeuangan extends javax.swing.JPanel {
                 .addGroup(main_content_payrollLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(pie_chart_payroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(scroll_tabel_keuangan_payroll, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         Parent.add(main_content_payroll, "card5");
@@ -1626,12 +1626,12 @@ public class PanelKeuangan extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(side_bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(Parent, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(Parent, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(side_bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(Parent, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+            .addComponent(Parent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

@@ -7,7 +7,7 @@
 # 
 # Host: 127.0.0.1 (MySQL Community Server - GPL 9.1.0)
 # Database: restoran_pbo
-# Generation time: 2024-12-21T14:02:54+08:00
+# Generation time: 2024-12-22T11:08:08+08:00
 # ************************************************************
 
 
@@ -48,8 +48,8 @@ CREATE TABLE `inventory` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `stok` int NOT NULL,
-  `satuan` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `jenis_inventory` tinyint NOT NULL,
+  `satuan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `jenis_inventory` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -86,7 +86,7 @@ CREATE TABLE `item_pesanan` (
   `id_menu` bigint NOT NULL,
   `jumlah` int NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `total_harga_item` double NOT NULL,
+  `total_harga_item` int NOT NULL,
   PRIMARY KEY (`id_pesanan`,`id_menu`),
   KEY `FK_item_pesanan_menu` (`id_menu`),
   CONSTRAINT `FK_item_pesanan_menu` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -134,7 +134,7 @@ DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `harga` double NOT NULL,
+  `harga` int NOT NULL,
   `deskripsi` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -165,8 +165,8 @@ DROP TABLE IF EXISTS `penggajian`;
 
 CREATE TABLE `penggajian` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `bonus` double NOT NULL,
-  `potongan` double NOT NULL,
+  `bonus` int NOT NULL,
+  `potongan` int NOT NULL,
   `id_user` bigint NOT NULL,
   `id_transaksi` bigint NOT NULL,
   PRIMARY KEY (`id`),
@@ -255,10 +255,10 @@ DROP TABLE IF EXISTS `transaksi`;
 
 CREATE TABLE `transaksi` (
   `id` bigint NOT NULL AUTO_INCREMENT,
-  `nominal` double NOT NULL,
+  `nominal` int NOT NULL,
   `tanggal` datetime NOT NULL,
-  `metode_pembayaran` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `jenis_transaksi` tinyint NOT NULL,
+  `metode_pembayaran` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `jenis_transaksi` varchar(50) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -274,10 +274,13 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `nama` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `gaji_pokok` double NOT NULL,
+  `gaji_pokok` int NOT NULL,
   `role` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `no_telp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `foto` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `no_telp` (`no_telp`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 
@@ -296,4 +299,4 @@ CREATE TABLE `user` (
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-# Dump completed on 2024-12-21T14:02:54+08:00
+# Dump completed on 2024-12-22T11:08:09+08:00
