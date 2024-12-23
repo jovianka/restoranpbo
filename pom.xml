@@ -9,7 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>23</maven.compiler.source>
         <maven.compiler.target>23</maven.compiler.target>
-        <exec.mainClass>org.kelasb23.restoranpbo.DashboardRestoran</exec.mainClass>
+        <exec.mainClass>org.kelasb23.restoranpbo.MenuWrapper</exec.mainClass>
     </properties>
     
     <dependencies>
@@ -103,7 +103,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>org.kelasb23.restoranpbo.DashboardRestoran</mainClass>
+                                <mainClass>org.kelasb23.restoranpbo.MenuWrapper</mainClass>
                             </manifest>
                         </archive>
                     </configuration>
@@ -125,7 +125,7 @@
                             <manifest>
                                 <addClasspath>true</addClasspath>
                                 <classpathPrefix>lib/</classpathPrefix>
-                                <mainClass>org.kelasb23.restoranpbo.DashboardRestoran</mainClass>
+                                <mainClass>org.kelasb23.restoranpbo.MenuWrapper</mainClass>
                             </manifest>
                         </archive>
                         <descriptorRefs>

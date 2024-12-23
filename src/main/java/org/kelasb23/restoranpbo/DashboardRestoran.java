@@ -257,22 +257,16 @@ public class DashboardRestoran extends javax.swing.JFrame {
     }//GEN-LAST:event_main_cashier_buttonActionPerformed
 
     private void main_tambah_menu_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_main_tambah_menu_buttonActionPerformed
-        Parent.removeAll();
-        Parent.add(main_content_dashboard);
-        Parent.repaint();
-        Parent.revalidate();
+
         main_tambah_user_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_transaksi_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_meja_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_menu_button.setBackground(new java.awt.Color(239, 246, 224));
-        this.update_dashboard();
+
     }//GEN-LAST:event_main_tambah_menu_buttonActionPerformed
 
     private void main_tambah_user_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_main_tambah_user_buttonActionPerformed
-        Parent.removeAll();
-        Parent.add(main_content_laporan);
-        Parent.repaint();
-        Parent.revalidate();
+
         main_tambah_user_button.setBackground(new java.awt.Color(239, 246, 224));
         main_tambah_transaksi_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_meja_button.setBackground(new java.awt.Color(150, 149, 146));
@@ -280,27 +274,21 @@ public class DashboardRestoran extends javax.swing.JFrame {
     }//GEN-LAST:event_main_tambah_user_buttonActionPerformed
 
     private void main_tambah_transaksi_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_main_tambah_transaksi_buttonActionPerformed
-        Parent.removeAll();
-        Parent.add(main_content_transaksi);
-        Parent.repaint();
-        Parent.revalidate();
+
         main_tambah_user_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_transaksi_button.setBackground(new java.awt.Color(239, 246, 224));
         main_tambah_meja_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_menu_button.setBackground(new java.awt.Color(150, 149, 146));
-        this.update_transaksi();
+
     }//GEN-LAST:event_main_tambah_transaksi_buttonActionPerformed
 
     private void main_tambah_meja_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_main_tambah_meja_buttonActionPerformed
-        Parent.removeAll();
-        Parent.add(main_content_payroll);
-        Parent.repaint();
-        Parent.revalidate();
+
         main_tambah_user_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_transaksi_button.setBackground(new java.awt.Color(150, 149, 146));
         main_tambah_meja_button.setBackground(new java.awt.Color(239, 246, 224));
         main_tambah_menu_button.setBackground(new java.awt.Color(150, 149, 146));
-        this.update_payroll();
+
     }//GEN-LAST:event_main_tambah_meja_buttonActionPerformed
 
     /**
