@@ -72,6 +72,7 @@ import java.sql.Date;
  */
 public class PanelDataRestoran extends javax.swing.JPanel {
     private DataRestoranMenu panel_menu = new DataRestoranMenu();
+    private DataRestoranMeja panel_meja = new DataRestoranMeja();
 
     
     private Dotenv dotenv;
@@ -156,7 +157,9 @@ public class PanelDataRestoran extends javax.swing.JPanel {
      */
     public PanelDataRestoran() {
         initComponents();
-        data_restoran_content.add (panel_menu, "menu");    
+        data_restoran_content.add (panel_menu, "menu");   
+        data_restoran_content.add(panel_meja, "meja");
+
         
         dotenv = Dotenv.configure().load();
         input_foto_pegawai = null;
@@ -707,7 +710,7 @@ public class PanelDataRestoran extends javax.swing.JPanel {
     private void data_restoran_nav_mejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_data_restoran_nav_mejaActionPerformed
         // TODO add your handling code here:
         CardLayout cl = (CardLayout) (data_restoran_content.getLayout());
-        cl.show(data_restoran_content, "keuangan");
+        cl.show(data_restoran_content, "meja");
         data_restoran_nav_menu.setBackground(new java.awt.Color(150, 149, 146));
         data_restoran_nav_pegawai.setBackground(new java.awt.Color(150, 149, 146));
         data_restoran_nav_meja.setBackground(new java.awt.Color(239, 246, 224));

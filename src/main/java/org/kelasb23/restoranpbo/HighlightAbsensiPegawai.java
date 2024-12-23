@@ -31,7 +31,6 @@ public class HighlightAbsensiPegawai implements DateHighlightPolicy{
     @Override
     public HighlightInformation getHighlightInformationOrNull(LocalDate date) {        
         for (AbsensiPegawai absen: this.absensi) {
-            System.out.println(absen.tanggal);
             if (absen.tanggal.isEqual(date)) {
                 if (absen.hadir.equals("Hadir")) {
                     return new HighlightInformation(Color.BLUE, Color.WHITE);

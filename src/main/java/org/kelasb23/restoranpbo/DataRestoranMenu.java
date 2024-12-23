@@ -649,6 +649,8 @@ public class DataRestoranMenu extends javax.swing.JPanel {
         label_tabel_menu1 = new javax.swing.JLabel();
         field_harga_menu = new javax.swing.JSpinner();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+
         main_tabel_menu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
